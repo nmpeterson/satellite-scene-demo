@@ -115,8 +115,9 @@
 
       // request the satallite data from hosted site
       let url =
-        //"https://developers.arcgis.com/javascript/latest/sample-code/satellites-3d/live/brightest.txt";
-        "http://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=tle";
+        //"https://developers.arcgis.com/javascript/latest/sample-code/satellites-3d/live/brightest.txt";  // Small sample of satellite TLE data
+        //"http://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=tle";  // All active satellites TLE data
+        "./active.txt";  // Local copy of CelesTrak TLE data
 
       //! JSON version available: http://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=json
 
