@@ -130,12 +130,14 @@
         // Parse the satellite TLE data
         const lines = txt.split("\n");
         const count = (lines.length / 3).toFixed(0);
+        const time = Date.now();
+        const now = new Date(time);
 
         for (let i = 0; i < count; i++) {
           let commonName = lines[i * 3 + 0];
           let line1 = lines[i * 3 + 1];
           let line2 = lines[i * 3 + 2];
-          let time = Date.now();
+          // let time = Date.now();
 
           /*************************************************
            * Create attributes for the International
@@ -153,7 +155,7 @@
           let satelliteLoc = null;
 
           try {
-            satelliteLoc = getSatelliteLocation(new Date(time), line1, line2);
+            satelliteLoc = getSatelliteLocation(now, line1, line2);
           } catch (error) { }
 
           if (satelliteLoc !== null) {
@@ -174,10 +176,10 @@
             let graphic = new Graphic({
               geometry: satelliteLoc,
               symbol: {
-                type: "picture-marker", // autocasts as new PictureMarkerSymbol()
-                url: "https://developers.arcgis.com/javascript/latest/sample-code/satellites-3d/live/satellite.png",
-                width: 48,
-                height: 48
+                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                color: [255, 255, 255],
+                outline: null,
+                size: 2
               },
               attributes: {
                 name: commonName,
