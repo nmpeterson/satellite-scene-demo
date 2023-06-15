@@ -116,7 +116,9 @@
       // request the satallite data from hosted site
       let url =
         //"https://developers.arcgis.com/javascript/latest/sample-code/satellites-3d/live/brightest.txt";
-        "https://celestrak.org/NORAD/elements/active.txt";
+        "http://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=tle";
+
+      //! JSON version available: http://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=json
 
       esriRequest(url, {
         responseType: "text"
