@@ -5,8 +5,9 @@ require([
   "esri/layers/FeatureLayer",
   "esri/Graphic",
   "esri/request",
-  "esri/widgets/Popup"
-], (Map, SceneView, GraphicsLayer, FeatureLayer, Graphic, esriRequest, Popup) => {
+  "esri/widgets/Popup",
+  "esri/widgets/Slider"
+], (Map, SceneView, GraphicsLayer, FeatureLayer, Graphic, esriRequest, Popup, Slider) => {
   const map = new Map({
     basemap: "satellite"
   });
@@ -180,6 +181,28 @@ require([
 
   map.addMany([satelliteLayer, satelliteTracks]);
 
+  // Create satellite slider and add to map
+  const slider = new Slider({
+    container: "sliderDiv",
+    min: 0,
+    max: 0,
+    steps: 500,
+    values: [0],
+    layout: "horizontal",
+    disabled: true,
+    snapOnClickEnabled: false,
+    visibleElements: {
+      labels: true,
+      rangeLabels: true
+    }
+  });
+
+  view.ui.add("infoDiv", { position: "bottom-left" });
+  slider.on(
+    ["thumb-drag", "thumb-change", "segment-drag"],
+    updateSatelliteFilter
+  );
+
   // request the satallite data from hosted site
   let url =
     //"https://developers.arcgis.com/javascript/latest/sample-code/satellites-3d/live/brightest.txt";  // Small sample of satellite TLE data
@@ -239,9 +262,26 @@ require([
         satGraphics.push(graphic);
       }
     };
-    satelliteLayer.applyEdits({ addFeatures: satGraphics });
+    satelliteLayer.applyEdits({ addFeatures: satGraphics }).then(slider.disabled = false);
+    slider.max = satGraphics.length;
+    slider.values = [satGraphics.length];
   });
 
+  // Update satellite filter based on slider
+  let satelliteView;
+
+  // Update satellite filter on layer load
+  view.whenLayerView(satelliteLayer).then(layerView => {
+    satelliteView = layerView;
+    updateSatelliteFilter();
+  });
+
+  function updateSatelliteFilter () {
+    console.log(`Displaying ${slider.values[0]} satellites`);
+    satelliteView.filter = {
+      where: `ObjectId < ${slider.values[0]}`
+    };
+  };
 
   function getSatelliteLocation (date, line1, line2) {
     /****************************************************

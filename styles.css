@@ -1,8 +1,19 @@
-    html,
-    body,
-    #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-    }
+html,
+body,
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.slider {
+  width: 100%;
+  height: 100%;
+}
+
+#infoDiv {
+  padding: 10px;
+  width: 350px;
+  height: 75px;
+}
