@@ -15,9 +15,17 @@ require([
   const view = new SceneView({
     container: "viewDiv",
     map: map,
+    camera: {
+      position: [
+        -94, // x
+        45, // y 
+        150000000  // z (meters)
+      ]
+    },
     constraints: {
       altitude: {
-        max: 12000000000 // meters
+        min: 5000000, // meters
+        max: 500000000 // meters
       }
     },
     // force the popup to the docked position
