@@ -7,13 +7,12 @@ body,
   width: 100%;
 }
 
-.slider {
-  width: 100%;
-  height: 100%;
-}
-
 #infoDiv {
-  padding: 10px;
   width: 350px;
   height: 75px;
+  margin-bottom: 30px;
+}
+
+.label {
+  padding: 10px;
 }
